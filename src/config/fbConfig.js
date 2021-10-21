@@ -1,8 +1,8 @@
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-const firebaseConfig = {
+const config = {
     apiKey: "AIzaSyBSN8CtRajebpkN25ugPM3qb8wis5Eq8B4",
     authDomain: "net-ninja-marioplan-b43c9.firebaseapp.com",
     projectId: "net-ninja-marioplan-b43c9",
@@ -13,5 +13,7 @@ const firebaseConfig = {
   };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(config);
+firebase.firestore().settings({ timestampsInSnapshots: true });
+
+export default firebase 
