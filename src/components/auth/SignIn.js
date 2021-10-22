@@ -19,7 +19,7 @@ class SignIn extends Component {
     }
 
     render() {
-        const { authError } = this.props;
+        const { authError, errorMessage } = this.props;
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
@@ -35,7 +35,7 @@ class SignIn extends Component {
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Login</button>
                         <div className="red-text center">
-                            {authError ? <p>{ authError }</p> : null }
+                            {authError ? <p>{ errorMessage }</p> : null }
                         </div>
                     </div>
                 </form>
@@ -46,7 +46,8 @@ class SignIn extends Component {
 
 const mapStateToProps = (state) =>{
     return {
-        authError: state.auth.authError
+        authError: state.auth.authError,
+        errorMessage : state.auth.errorMessage
     }
 }
 
