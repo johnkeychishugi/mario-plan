@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from '../../store/actions/authActions';
 class SignIn extends Component {
     state = {
         email:'',
@@ -39,4 +40,10 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn
+const mapDispatchToProps = (dispatch) =>{
+    return {
+
+    }
+}
+
+export default connect(null, mapDispatchToProps)(SignIn);
