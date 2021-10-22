@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { signUp } from '../../store/actions/authActions';
 
 class SignUp extends Component {
     state = {
         email:'',
         password:'',
-        firstname:'',
-        lastname:''
+        firstName:'',
+        lastName:''
     }
 
     handleChange = (e) =>{
@@ -18,11 +19,11 @@ class SignUp extends Component {
 
     handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(this.state);
+        this.props.signUp(this.state);
     }
 
     render() {
-        const {  auth } = this.props;
+        const {  auth, authError, errorMessage } = this.props;
 
         if(auth.uid)  return <Redirect to="/" />
 
@@ -31,12 +32,12 @@ class SignUp extends Component {
                 <form onSubmit={this.handleSubmit} className="white">
                     <h5 className="grey-text text-darken-3">Sign Up</h5>
                     <div className="input-field">
-                        <label htmlFor="firstname">Fist Name</label>
-                        <input type="text" id="firstname" onChange={this.handleChange} />
+                        <label htmlFor="firstName">Fist Name</label>
+                        <input type="text" id="firstName" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="lastname">Last Name</label>
-                        <input type="text" id="lastname" onChange={this.handleChange} />
+                        <label htmlFor="lastName">Last Name</label>
+                        <input type="text" id="lastName" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
                         <label htmlFor="email">Email</label>
@@ -48,6 +49,9 @@ class SignUp extends Component {
                     </div>
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+                        <div className="red-text center">
+                            {authError ? <p>{ errorMessage }</p> : null }
+                        </div>
                     </div>
                 </form>
             </div>
@@ -55,11 +59,18 @@ class SignUp extends Component {
     }
 }
 
-
 const mapStateToProps = (state) =>{
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        authError: state.auth.authError,
+        errorMessage : state.auth.errorMessage
     }
 }
 
-export default connect(mapStateToProps)(SignUp)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signUp : (newUser) => dispatch(signUp(newUser))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
